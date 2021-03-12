@@ -2,11 +2,12 @@ const express = require("express");
 const app = express();
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
-const bodyParser = require("body-parser");
+// const bodyParser = require("body-parser");
+const morgan = require("morgan");
 
 //routes import
 const authRoute = require("./routes/auth");
-const morgan = require("morgan");
+const postRoute = require("./routes/post");
 
 dotenv.config();
 
@@ -19,9 +20,10 @@ mongoose.connect(
 
 //middleware
 app.use(morgan("dev"));
-app.use(bodyParser.json());
+app.use(express.json());
 
 //Route Middleware
 app.use("/api/user", authRoute);
+app.use("/api/posts", postRoute);
 
 app.listen(6000, () => console.log("server started"));
